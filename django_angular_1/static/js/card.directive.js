@@ -11,22 +11,36 @@
       templateUrl: '/static/html/card.html',
       restrict: 'E',
       controller: ['$scope', '$http', function ($scope, $http) {
+
         var url = '/scrumboard/cards/' + $scope.card.id + '/';
+        $scope.destList = $scope.list;
+
+        function removeCardFromList(card, list){
+          var cards = list.cards;
+          cards.splice(cards.indexOf(card), 1);
+        }
+
         $scope.update = function () {
-          $http.put(
-            url,
-            $scope.card
-          );
+          return $http.put(url, $scope.card);
+        }
+
+        // this doesn't seem to work correctly.
+        // instead, the list id is the previous select value
+        $scope.move = function(destList) {
+          if (destList===undefined) {
+            return;
+          }
+          $scope.card.list = destList.id;
+          $scope.update().then(function(){
+            destList.cards.push($scope.card);
+            removeCardFromList($scope.card, $scope.list);
+          });
         }
 
         $scope.delete = function () {
           $http.delete(url).then(
             function () {
-              var cards = $scope.list.cards;
-              cards.splice(
-                cards.indexOf($scope.card),
-                1
-              );
+              removeCardFromList($scope.card, $scope.list);
             }
           );
         };
@@ -34,7 +48,6 @@
         $scope.modelOptions = {
           debounce: 2000
         };
-
       }]
     };
   }
