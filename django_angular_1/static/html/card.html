@@ -1,6 +1,8 @@
 <div class="card" ng-hide="edit" ng-click="edit=true">
   <h4>{{ card.title }}</h4>
   <span class="description">{{ card.description }}</span>
+  <br />
+  <span>Points: {{ card.story_points || 0 }}, Value: {{card.business_value || 0 }}</span>
 </div>
 
 <div class="card" ng-show="edit" ng-model-options="modelOptions"> 
