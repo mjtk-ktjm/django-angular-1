@@ -4,6 +4,8 @@
   angular.module('scrumboard.demo')
     .directive('scrumboardCard', CardDirective);
 
+  // Add inputs for story points and business value
+
   function CardDirective() {
     return {
       templateUrl: '/static/html/card.html',

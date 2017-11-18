@@ -13,8 +13,13 @@ html {
 }
 
 .list h3 {
+  display: inline;
   padding-left: 7px;
   color: white;
+}
+
+.list button {
+  float: right;
 }
 
 ul {
